@@ -7,17 +7,12 @@ Node.js y npm instalados
 Base de datos MongoDB configurada (cluster en la nube ya desplegado)
 Instalación:
 Clona este repositorio:
-Bash
 git clone https://github.com/AlejandroMartinez04/api_JUJU.git
 
-
 Navega al directorio del proyecto:
-Bash
 cd Api_JUJU
 
-
 Instala las dependencias:
-Bash
 npm install nodemon jsonwebtoken mongoose express dotenv
 
 
