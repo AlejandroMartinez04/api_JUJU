@@ -6,7 +6,30 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const secret = process.env.SECRET;
 
-// get a token
+/**
+ * @openapi
+ * /api/token:
+ *   get:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
+
+
 router.post('/token', (req, res) => {
   //variables temporales para validar un token y hagan match y asi hacer que este devuelva el nuevo token solicitado
   const { id: sub, name } = { id: "diegom", name: "DiegoMartinez" };
@@ -18,6 +41,29 @@ router.post('/token', (req, res) => {
   }, secret)
   res.send({ token })
 })
+
+/**
+ * @openapi
+ * /api/book:
+ *   get:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
 
 router.get('/book', (req, res) => {
   try {
@@ -36,6 +82,29 @@ router.get('/book', (req, res) => {
 });
 
 
+/**
+ * @openapi
+ * /api/book:
+ *   post:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
+
 router.post('/book', (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1]
@@ -53,6 +122,29 @@ router.post('/book', (req, res) => {
   }
 });
 
+/**
+ * @openapi
+ * /api/book/:id:
+ *   get:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
+
 router.get('/book/:id', async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1]
@@ -69,6 +161,28 @@ router.get('/book/:id', async (req, res) => {
   }
 });
 
+/**
+ * @openapi
+ * /api/book/:id:
+ *   patch:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
 
 router.patch('/book/:id', async (req, res) => {
   try {
@@ -91,6 +205,52 @@ router.patch('/book/:id', async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error en el servidor.' });
+  }
+});
+
+/**
+ * @openapi
+ * /api/book/:id:
+ *   delete:
+ *     tags:
+ *       - Workouts
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: OK
+ *                 data:
+ *                   type: array 
+ *                   items: 
+ *                     type: object
+ */
+
+
+router.delete('/book/:id', async (req, res) => {
+  try {
+    const { bookId } = req.params;
+
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, secret);
+    if (!decoded.roles.includes('admin') || Date.now() > decoded.exp) {
+      return res.status(401).send({ error: "token no autorizado o expirado" });
+    }
+
+    const deletedBook = await booksSchema.findByIdAndDelete(bookId);
+    if (!deletedBook) {
+      return res.status(404).send({ message: "libro no encontrado" });
+    }
+
+    res.status(200).json({ message: "libro borrado satisfactoriamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal server error" });
   }
 });
 
