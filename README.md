@@ -85,4 +85,3 @@ La implementación actual utiliza credenciales codificadas para la generación d
 Implementa un manejo de errores y una validación más robustos para los cuerpos de las solicitudes y los parámetros.
 Considera la limitación de velocidad para evitar el abuso.
 Explora roles y permisos de usuario para un control de acceso más granular.
-Este README proporciona una base sólida para comprender y usar la API. No dudes en personalizarlo y extenderlo según sea necesario para los requisitos específicos de tu proyecto.
