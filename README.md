@@ -24,32 +24,32 @@ SECRET=your_secret_key  # Usado para la firma de JWT
 Conexión a la Base de Datos:
 Asegúrate de tener una base de datos MongoDB en ejecución y configura la cadena de conexión en el código de tu aplicación (típicamente en un archivo separado como database.js).
 Rutas de la API:
-1. Autenticación (POST /token):
+1. Autenticación (POST api/token):
    
 Esta ruta emite un token JWT después de una validación exitosa (actualmente con credenciales predefinidas en el código). En un entorno de producción, será necesario implementar un mecanismo de autenticación de usuario adecuado, como una colección de users los cuales tengan un nombre correo y contraseña, para con estos hacer el match y que el JWT nos devuelva el token 
 Cuerpo de la Solicitud:
 No se requiere ninguno (actualmente)
 
-2. Obtener Todos los Libros (GET /book):
+2. Obtener Todos los Libros (GET api/book):
 
 Recupera todos los libros de la base de datos.
 Requiere un token JWT válido en el encabezado de autorización (con formato Bearer <token>).
 
-3. Crear un Libro (POST /book):
+3. Crear un Libro (POST api/book):
    
 Crea un nuevo libro en la base de datos.
 Requiere un token JWT válido en el encabezado de autorización.
 Cuerpo de la Solicitud:
 Datos del libro en formato JSON (por ejemplo, título, autor, anioPublicacion, estado[“disponible”,”reservado”]).
 
-4. Obtener un Libro por ID (GET /book/:id):
+4. Obtener un Libro por ID (GET api/book/:id):
    
 Recupera un libro específico en base a su ID.
 Requiere un token JWT válido en el encabezado de autorización.
 Parámetro URL:
 id: El identificador único del libro (debe conocer previamente el id del libro a buscar)
 
-5. Actualizar un Libro (PATCH /book/:id):
+5. Actualizar un Libro (PATCH api/book/:id):
    
 Actualiza un libro existente utilizando actualizaciones parciales.
 Requiere un token JWT válido en el encabezado de autorización.
@@ -59,6 +59,13 @@ Cuerpo de la Solicitud:
 Datos de actualización del libro en formato JSON (solo las propiedades que deseas cambiar)
 Manejo de Errores:
 Las rutas de la API manejan errores potenciales y devuelven códigos HTTP apropiados junto con mensajes informativos.
+
+6. Obtener la documentacion de swagger(GET /api/docs):
+   
+Recupera un libro específico en base a su ID.
+Requiere un token JWT válido en el encabezado de autorización.
+Parámetro URL:
+id: El identificador único del libro (debe conocer previamente el id del libro a buscar)
 
 Ejemplo de Uso:
 Inicia el servidor Node.js (asumiendo que tu archivo principal de aplicación es app.js):
