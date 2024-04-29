@@ -71,6 +71,11 @@ Ejemplo de Uso:
 Inicia el servidor Node.js (asumiendo que tu archivo principal de aplicación es app.js):
 npm run dev
 
+7. Eliminar un Libro (DELETE /book/:id)
+Permite a usuarios autorizados eliminar un libro de la base de datos por su ID.
+Requiere un token JWT válido en el encabezado de autorización (con formato Bearer <token>). El token debe tener el rol admin para estar autorizado para la eliminación.
+Parámetro URL:
+id: El identificador único del libro
 
 Usa una herramienta como Postman para enviar solicitudes a los puntos finales de la API. Recuerda establecer el encabezado de autorización con un token JWT válido para las rutas seguras.
 
