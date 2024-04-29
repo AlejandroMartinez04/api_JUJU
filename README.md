@@ -72,6 +72,7 @@ Inicia el servidor Node.js (asumiendo que tu archivo principal de aplicación es
 npm run dev
 
 7. Eliminar un Libro (DELETE /book/:id)
+   
 Permite a usuarios autorizados eliminar un libro de la base de datos por su ID.
 Requiere un token JWT válido en el encabezado de autorización (con formato Bearer <token>). El token debe tener el rol admin para estar autorizado para la eliminación.
 Parámetro URL:
